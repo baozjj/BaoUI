@@ -1,29 +1,48 @@
 <template>
-  <div>
-    <Button ref="buttonRef">Test Button</Button>
-    <Button plain>Plain Button</Button>
-    <Button round>Round Button</Button>
-    <Button circle size="small">V</Button>
-    <Button circle size="normal">V</Button>
-    <Button circle size="large">V</Button>
-    <Button disabled>Disabled Button</Button><br /><br />
-    <Button type="primary">Primary</Button>
-    <Button type="success">Success</Button>
-    <Button type="info">Info</Button>
-    <Button type="warning">Warning</Button>
-    <Button type="danger">Danger</Button><br /><br />
-    <Button type="primary" plain>Primary</Button>
-    <Button type="success" plain>Success</Button>
-    <Button type="info" plain>Info</Button>
-    <Button type="warning" plain>Warning</Button>
-    <Button type="danger" plain>Danger</Button><br /><br />
-    <Button size="small">Small</Button>
-    <Button size="normal">Small</Button>
-    <Button size="large">Large</Button>
+  <div class="container">
+    <br>
+    <Collapse 
+      v-model="openedValue"
+      accordion
+    >
+      <CollapseItem name="a" title="qwe">
+        <template #title>
+          标题1
+        </template>
+        12312312<br />
+        12312312<br />
+        12312312<br />
+        12312312<br />
+      </CollapseItem>
+      <CollapseItem name="b">
+        <template #title>
+          标题2
+        </template>
+        sadasd
+      </CollapseItem>
+      <CollapseItem name="c">
+        <template #title>
+          标题3
+        </template>
+        sadasd
+      </CollapseItem>
+    </Collapse>
   </div>
-  <a href="#">zheshi lint</a>
 </template>
 
 <script setup lang="ts">
+import {ref} from 'vue'
 import Button from './components/Button/index.vue'
+import Collapse from './components/Collapse/index.vue'
+import CollapseItem from './components/Collapse/CollapseItem.vue';
+
+const openedValue = ref(['a'])
 </script>
+
+<style scope lang="scss">
+.container {
+  width: 100vw;
+  height: 100vh;
+  background-color: #fff;
+}
+</style>
