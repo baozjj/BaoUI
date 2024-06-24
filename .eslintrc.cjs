@@ -20,7 +20,8 @@ module.exports = {
     {
       files: ['src/**/*.vue'],
       rules: {
-        'vue/multi-word-component-names': 0
+        'vue/multi-word-component-names': 0,
+        'no-debugger' : 0
       }
     }
   ]
