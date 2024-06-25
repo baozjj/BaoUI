@@ -15,6 +15,7 @@
       @click="handleClick"
     >
       <slot name="title">{{ title }}</slot>
+      <Icon icon="angle-right" class="header-angle" />
     </div>
     <Transition 
       name="slide"
@@ -34,6 +35,7 @@
 import { inject, computed } from 'vue';
 import type { CollapseItemProps } from './types'
 import { collapseContextKey } from './types';
+import Icon from '@/components/Icon/Icon.vue'
 defineOptions({
     name: 'BCollapseItem'
 })
