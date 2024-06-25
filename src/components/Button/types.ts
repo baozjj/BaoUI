@@ -12,6 +12,7 @@ export interface ButtonProps {
   loading?: boolean
   nativeType?: ButtonNativeType
   autofocus?: boolean
+  icon?: string
 }
 
 export interface ButtonInstance {

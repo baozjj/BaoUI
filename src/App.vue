@@ -1,7 +1,8 @@
 <template>
   <div class="container">
     <br>
-    <Collapse 
+    <div style="width: 80%">
+      <Collapse 
       v-model="openedValue"
       accordion
     >
@@ -26,7 +27,14 @@
         </template>
         sadasd
       </CollapseItem>
-    </Collapse>
+      </Collapse>
+    </div>
+
+    <Icon icon="arrow-up" size="2xl" />
+    <Icon icon="arrow-down" size="xl" type="success"/><br>
+    <Button loading> 按钮1 </Button>
+    <Button icon="arrow-up"> 按钮2 </Button>
+    
   </div>
 </template>
 
@@ -35,6 +43,7 @@ import {ref} from 'vue'
 import Button from './components/Button/index.vue'
 import Collapse from './components/Collapse/index.vue'
 import CollapseItem from './components/Collapse/CollapseItem.vue';
+import Icon from './components/Icon/Icon.vue'
 
 const openedValue = ref(['a'])
 </script>
