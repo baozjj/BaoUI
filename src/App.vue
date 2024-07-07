@@ -34,7 +34,11 @@
     <Icon icon="arrow-down" size="xl" type="success"/><br>
     <Button loading> 按钮1 </Button>
     <Button icon="arrow-up"> 按钮2 </Button> -->
-    <Tooltip placement="right">
+
+    <Tooltip 
+      placement="right"
+      :trigger="trigger"
+    >
       <div>321</div>
       <template #content>
         <div>content</div>
@@ -43,6 +47,12 @@
         <div>content</div>
       </template>
     </Tooltip>
+
+    <br>
+    <br>
+    <br>
+    <button @click="trigger = trigger === 'hover' ? 'click' : 'hover'">切换</button>
+
 
     
   </div>
@@ -58,6 +68,7 @@ import Tooltip from './components/Tooltip/index.vue'
 
 const openedValue = ref(['a'])
 
+const trigger = ref('hover')
 
 </script>
 
@@ -69,5 +80,6 @@ const openedValue = ref(['a'])
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 </style>
