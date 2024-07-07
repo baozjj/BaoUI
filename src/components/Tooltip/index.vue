@@ -1,5 +1,6 @@
 <template>
-  <div 
+  <div
+    ref="popperContainer"
     class='v-tooltip'
     v-on="outerEvents"
   >
@@ -24,10 +25,11 @@
 </template>
 
 <script lang='ts' setup >
-import { ref, watch, reactive } from 'vue'
+import { ref, watch } from 'vue'
 import type { TooltipProps, TooltipEmits } from './types.ts'
-import { createPopper } from '@popperjs/core';
+import { createPopper } from '@popperjs/core'
 import type { Instance } from '@popperjs/core'
+import { useClickOutside } from '@/hooks/useClickOutside.ts'
 
 const props = withDefaults(defineProps<TooltipProps>(), {
   placement: 'bottom',
@@ -39,6 +41,7 @@ const emits = defineEmits<TooltipEmits>()
 const isOpen = ref(false)
 const popperNode = ref<HTMLElement>()
 const triggerNode = ref<HTMLElement>()
+const popperContainer = ref<HTMLElement>()
 let popperInstance: Instance | null = null
 let events= ref<Record<string, any>>({})
 let outerEvents= ref<Record<string, any>>({})
@@ -56,6 +59,10 @@ const togglePopper = () => {
   isOpen.value = !isOpen.value
   emits('visible-change', isOpen.value)
 }
+
+useClickOutside(popperContainer, () => {
+  if(props.trigger === 'click' && isOpen.value) close() 
+})
 
 const attachEcents = () => {
   if (props.trigger === 'hover') {

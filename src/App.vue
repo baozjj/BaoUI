@@ -41,10 +41,12 @@
     >
       <div>321</div>
       <template #content>
-        <div>content</div>
-        <div>content</div>
-        <div>content</div>
-        <div>content</div>
+        <div style="border: 1px solid red">
+          <div>content</div>
+          <div>content</div>
+          <div>content</div>
+          <div>content</div>
+        </div>
       </template>
     </Tooltip>
 
