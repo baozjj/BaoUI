@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <br>
+    <!-- <br>
     <div style="width: 80%">
       <Collapse 
       v-model="openedValue"
@@ -33,19 +33,45 @@
     <Icon icon="arrow-up" size="2xl" />
     <Icon icon="arrow-down" size="xl" type="success"/><br>
     <Button loading> 按钮1 </Button>
-    <Button icon="arrow-up"> 按钮2 </Button>
+    <Button icon="arrow-up"> 按钮2 </Button> -->
+
+    <Tooltip 
+      placement="right"
+      :trigger="trigger"
+    >
+      <div>321</div>
+      <template #content>
+        <div style="border: 1px solid red">
+          <div>content</div>
+          <div>content</div>
+          <div>content</div>
+          <div>content</div>
+        </div>
+      </template>
+    </Tooltip>
+
+    <br>
+    <br>
+    <br>
+    <button @click="trigger = trigger === 'hover' ? 'click' : 'hover'">切换</button>
+
+
     
   </div>
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
+import {onMounted, ref} from 'vue'
 import Button from './components/Button/index.vue'
 import Collapse from './components/Collapse/index.vue'
 import CollapseItem from './components/Collapse/CollapseItem.vue';
 import Icon from './components/Icon/Icon.vue'
+import Tooltip from './components/Tooltip/index.vue'
 
 const openedValue = ref(['a'])
+
+const trigger = ref('hover')
+
 </script>
 
 <style scope lang="scss">
@@ -53,5 +79,9 @@ const openedValue = ref(['a'])
   width: 100vw;
   height: 100vh;
   background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 </style>
