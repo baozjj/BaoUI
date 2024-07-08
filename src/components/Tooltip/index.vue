@@ -25,8 +25,8 @@
 </template>
 
 <script lang='ts' setup >
-import { ref, watch } from 'vue'
-import type { TooltipProps, TooltipEmits } from './types.ts'
+import { onUnmounted, ref, watch } from 'vue'
+import type { TooltipProps, TooltipEmits, TooltipInstance } from './types.ts'
 import { createPopper } from '@popperjs/core'
 import type { Instance } from '@popperjs/core'
 import { useClickOutside } from '@/hooks/useClickOutside.ts'
@@ -34,6 +34,7 @@ import { useClickOutside } from '@/hooks/useClickOutside.ts'
 const props = withDefaults(defineProps<TooltipProps>(), {
   placement: 'bottom',
   trigger: 'hover',
+  manual: false,
 })
 
 const emits = defineEmits<TooltipEmits>()
@@ -61,7 +62,7 @@ const togglePopper = () => {
 }
 
 useClickOutside(popperContainer, () => {
-  if(props.trigger === 'click' && isOpen.value) close() 
+  if(props.trigger === 'click' && isOpen.value && !props.manual) close() 
 })
 
 const attachEcents = () => {
@@ -72,9 +73,9 @@ const attachEcents = () => {
    events.value['click'] = togglePopper 
   }
 }
-
-attachEcents()
-
+if (!props.manual) {
+  attachEcents()
+}
 
 watch(
   isOpen,
@@ -95,13 +96,35 @@ watch(
 watch(
   () => props.trigger,
   (newValue, oldValue) => {
-    if (newValue !== oldValue) {
+    if (newValue !== oldValue && !props.manual) {
       events.value = {}
       outerEvents.value = {}
       attachEcents()
     }
   }
 )
+
+watch(
+  () => props.manual,
+  (isManual) => {
+    debugger
+    if (isManual) {
+      events.value = {}
+      outerEvents.value = {}
+    } else {
+      attachEcents()
+    }
+  }
+)
+
+onUnmounted(() => {
+  popperInstance?.destroy()
+})
+
+defineExpose<TooltipInstance>({
+  'show': open,
+  'hide': close,
+})
 
 </script>
 
