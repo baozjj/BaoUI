@@ -36,8 +36,11 @@
     <Button icon="arrow-up"> 按钮2 </Button> -->
 
     <Tooltip 
+      ref='tooltipRef'
       placement="right"
       :trigger="trigger"
+      :manual="true"
+      :popper-options="options"
     >
       <div>321</div>
       <template #content>
@@ -54,6 +57,8 @@
     <br>
     <br>
     <button @click="trigger = trigger === 'hover' ? 'click' : 'hover'">切换</button>
+    <button @click="open">打开</button>
+    <button @click="close">关闭</button>
 
 
     
@@ -67,10 +72,22 @@ import Collapse from './components/Collapse/index.vue'
 import CollapseItem from './components/Collapse/CollapseItem.vue';
 import Icon from './components/Icon/Icon.vue'
 import Tooltip from './components/Tooltip/index.vue'
+import type { Trigger, TooltipInstance } from './components/Tooltip/types'
+import type { Options } from '@popperjs/core'
 
 const openedValue = ref(['a'])
 
-const trigger = ref('hover')
+const trigger = ref<Trigger>('hover')
+const tooltipRef = ref<TooltipInstance>()
+
+const options: Partial<Options> = { placement: 'right-end', strategy: 'fixed'}
+
+const open = () => {
+  tooltipRef.value?.show()
+}
+const close = () => {
+  tooltipRef.value?.hide()
+}
 
 </script>
 
