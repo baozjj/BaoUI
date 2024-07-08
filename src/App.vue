@@ -40,6 +40,7 @@
       placement="right"
       :trigger="trigger"
       :manual="true"
+      :popper-options="options"
     >
       <div>321</div>
       <template #content>
@@ -72,11 +73,14 @@ import CollapseItem from './components/Collapse/CollapseItem.vue';
 import Icon from './components/Icon/Icon.vue'
 import Tooltip from './components/Tooltip/index.vue'
 import type { Trigger, TooltipInstance } from './components/Tooltip/types'
+import type { Options } from '@popperjs/core'
 
 const openedValue = ref(['a'])
 
 const trigger = ref<Trigger>('hover')
 const tooltipRef = ref<TooltipInstance>()
+
+const options: Partial<Options> = { placement: 'right-end', strategy: 'fixed'}
 
 const open = () => {
   tooltipRef.value?.show()

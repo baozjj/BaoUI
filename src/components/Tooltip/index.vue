@@ -12,20 +12,22 @@
       <slot />
     </div>
 
-    <div
-      v-if="isOpen"
-      class="v-tooltip__poper"
-      ref="popperNode"  
-    >
-      <slot name="content">
-        {{ content }}
-      </slot>
-    </div>
+    <Transition :name="props.transition">
+      <div
+        v-if="isOpen"
+        class="v-tooltip__popper"
+        ref="popperNode"  
+      >
+        <slot name="content">
+          {{ content }}
+        </slot>
+      </div>
+    </Transition>
   </div>
 </template>
 
 <script lang='ts' setup >
-import { onUnmounted, ref, watch } from 'vue'
+import { onUnmounted, ref, watch, computed } from 'vue'
 import type { TooltipProps, TooltipEmits, TooltipInstance } from './types.ts'
 import { createPopper } from '@popperjs/core'
 import type { Instance } from '@popperjs/core'
@@ -35,6 +37,7 @@ const props = withDefaults(defineProps<TooltipProps>(), {
   placement: 'bottom',
   trigger: 'hover',
   manual: false,
+  transition: 'fade'
 })
 
 const emits = defineEmits<TooltipEmits>()
@@ -46,6 +49,13 @@ const popperContainer = ref<HTMLElement>()
 let popperInstance: Instance | null = null
 let events= ref<Record<string, any>>({})
 let outerEvents= ref<Record<string, any>>({})
+
+const popperOptions = computed(() => {
+  return {
+    placement: props.placement,
+    ...props.popperOptions
+  }
+})
 
 const open = () => {
   isOpen.value = true
@@ -82,12 +92,8 @@ watch(
   (newValue) => {
     if (newValue) {
       if (popperNode.value && triggerNode.value) {
-        popperInstance = createPopper(triggerNode.value, popperNode.value, {
-          placement: props.placement,
-        })
+        popperInstance = createPopper(triggerNode.value, popperNode.value, popperOptions.value)
       }
-    } else {
-      popperInstance?.destroy()
     }
   },
   { flush: 'post' }
@@ -107,7 +113,6 @@ watch(
 watch(
   () => props.manual,
   (isManual) => {
-    debugger
     if (isManual) {
       events.value = {}
       outerEvents.value = {}
