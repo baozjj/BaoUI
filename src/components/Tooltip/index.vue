@@ -32,12 +32,15 @@ import type { TooltipProps, TooltipEmits, TooltipInstance } from './types.ts'
 import { createPopper } from '@popperjs/core'
 import type { Instance } from '@popperjs/core'
 import { useClickOutside } from '@/hooks/useClickOutside.ts'
+import { debounce } from 'lodash-es'
 
 const props = withDefaults(defineProps<TooltipProps>(), {
   placement: 'bottom',
   trigger: 'hover',
   manual: false,
-  transition: 'fade'
+  transition: 'fade',
+  openDelay: 0,
+  closeDelay: 0,
 })
 
 const emits = defineEmits<TooltipEmits>()
@@ -48,7 +51,9 @@ const triggerNode = ref<HTMLElement>()
 const popperContainer = ref<HTMLElement>()
 let popperInstance: Instance | null = null
 let events= ref<Record<string, any>>({})
-let outerEvents= ref<Record<string, any>>({})
+let outerEvents = ref<Record<string, any>>({})
+let openTimes = 0
+let closeTimes = 0
 
 const popperOptions = computed(() => {
   return {
@@ -57,18 +62,23 @@ const popperOptions = computed(() => {
   }
 })
 
-const open = () => {
+const open = debounce(() => {
+  openTimes++
   isOpen.value = true
   emits('visible-change', true)
-} 
-const close = () => {
+}, props.openDelay) 
+const close = debounce(() => {
+  closeTimes++
   isOpen.value = false
   emits('visible-change', false)
-}
+}, props.openDelay)
 
 const togglePopper = () => {
-  isOpen.value = !isOpen.value
-  emits('visible-change', isOpen.value)
+  if (isOpen.value) {
+    close()
+  } else {
+    open()
+  }
 }
 
 useClickOutside(popperContainer, () => {

@@ -39,8 +39,9 @@
       ref='tooltipRef'
       placement="right"
       :trigger="trigger"
-      :manual="true"
       :popper-options="options"
+      :open-delay="1000"
+      :close-delay="1000"
     >
       <div>321</div>
       <template #content>
