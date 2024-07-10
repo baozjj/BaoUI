@@ -40,12 +40,23 @@
       placement="right"
       :trigger="trigger"
       :popper-options="options"
-      :open-delay="1000"
-      :close-delay="1000"
     >
-      <div>321</div>
+      <div style="border: 1px solid red">321</div>
       <template #content>
-        <div style="border: 1px solid red">
+        <div>
+          <div>content</div>
+          <div>content</div>
+          <div>content</div>
+          <div>content</div>
+        </div>
+      </template>
+    </Tooltip>
+    <Tooltip 
+      placement="left"
+    >
+      <div style="border: 1px solid red">321</div>
+      <template #content>
+        <div>
           <div>content</div>
           <div>content</div>
           <div>content</div>
