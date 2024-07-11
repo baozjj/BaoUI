@@ -97,6 +97,7 @@ useClickOutside(popperContainer, () => {
 const attachEcents = () => {
   if (props.trigger === 'hover') {
     events.value['mouseenter'] = open
+    outerEvents.value['mouseenter'] = open
     outerEvents.value['mouseleave'] = close
   } else if (props.trigger === 'click') {
    events.value['click'] = togglePopper 
