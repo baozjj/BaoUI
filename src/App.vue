@@ -72,6 +72,14 @@
     <button @click="open">打开</button>
     <button @click="close">关闭</button>
 
+    <Dropdown 
+      placement="bottom"
+      :trigger="trigger"
+      :menu-options="dropdownOptions"
+    >
+    123
+    </Dropdown>
+
 
     
   </div>
@@ -87,6 +95,9 @@ import Tooltip from './components/Tooltip/index.vue'
 import type { Trigger, TooltipInstance } from './components/Tooltip/types'
 import type { Options } from '@popperjs/core'
 
+import Dropdown from './components/Dropdown/index.vue'
+import type {  MenuOption } from './components/Dropdown/types'
+
 const openedValue = ref(['a'])
 
 const trigger = ref<Trigger>('hover')
@@ -100,6 +111,14 @@ const open = () => {
 const close = () => {
   tooltipRef.value?.hide()
 }
+
+const dropdownOptions: MenuOption[] = [
+  { key: 'a', label: '选项1' },
+  { key: 'b', label: '选项2', disabled: true },
+  { key: 'c', label: '选项3', divided: true },
+  { key: 'd', label: '选项4' },
+  { key: 'e', label: '选项5' },
+]
 
 </script>
 
