@@ -86,7 +86,7 @@
 </template>
 
 <script setup lang="ts">
-import {onMounted, ref} from 'vue'
+import {onMounted, ref, h} from 'vue'
 import Button from './components/Button/index.vue'
 import Collapse from './components/Collapse/index.vue'
 import CollapseItem from './components/Collapse/CollapseItem.vue';
@@ -113,7 +113,7 @@ const close = () => {
 }
 
 const dropdownOptions: MenuOption[] = [
-  { key: 'a', label: '选项1' },
+  { key: 'a', label: h('b', 'this is bold') },
   { key: 'b', label: '选项2', disabled: true },
   { key: 'c', label: '选项3', divided: true },
   { key: 'd', label: '选项4' },
