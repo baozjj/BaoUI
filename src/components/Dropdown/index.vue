@@ -25,7 +25,9 @@
                 :class="{'is-disabled': item.disabled, 'is-divied': item.divided }"
                 :id="`dropdown-item-${item.key}`"
               >
-                {{  item.label }}
+                <RenderVnode 
+                  :v-node="item.label"
+                />
               </li>
 
             </template>
@@ -40,8 +42,11 @@ import { ref } from 'vue'
 import type { DropdownProps, DropdownInstance, DropdownEmits, MenuOption } from './types'
 import Tooltip from '../Tooltip/index.vue'
 import type { TooltipInstance } from '../Tooltip/types';
+import RenderVnode from '../Common/RenderVnode';
 
-const props = defineProps<DropdownProps>()
+const props = withDefaults(defineProps<DropdownProps>(), {
+  hideAfterClick: true
+})
 const emits = defineEmits<DropdownEmits>()
 
 const tooltipRef = ref<TooltipInstance>()
@@ -55,6 +60,9 @@ const itemClick = (e: MenuOption) => {
     return
   }
   emits('select', e)
+  if (props.hideAfterClick) {
+    tooltipRef.value?.hide()
+  }
 }
 </script>
 
